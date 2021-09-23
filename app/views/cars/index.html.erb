@@ -1,0 +1,46 @@
+<h3 class="title-dealership">Dealership: <%= @dealership.name %></h3>
+<% if can? :create, :inventory %>
+  <div class="inventory-options">
+    <%= form_with(model: Car.new, local: true) do |f| %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    
+      <%= f.label :price %>
+      <%= f.number_field :price, step: :any %>
+
+      <%= f.label :condition %>
+      <%= f.select :condition, [["New", :new_car], ["Used ", :used]], {}, {} %>
+    
+      <%= f.submit "Add Car" %>
+    
+    <% end %>
+  </div>
+<% end %>
+<table class="inventory-table">
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Condition</th>
+    <% if can? :delete, :inventory %>
+      <th>Options</th>
+    <% end %>
+  </tr>
+
+  <% @cars.each.with_index(1) do |car, index| %>
+    <tr>
+      <td><%= index %></td>
+      <td><%= car.name %></td>
+      <td><%= car.price %></td>
+      <td><%= car.new_car? ? 'New' : 'Used'  %></td>
+      <% if can? :delete, :inventory %>
+        <td>
+          <%= form_for(car, method: :delete) do |f| %>
+            <%= f.submit "Delete" %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
