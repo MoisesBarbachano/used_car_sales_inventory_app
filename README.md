@@ -1,4 +1,4 @@
-# README
+# DOCUMENTATION TO RUN THE PROJECT
 
 Steps
 NOTES: Rails 6.0.4.1 and MongoDB v3.6.8
